@@ -10,6 +10,7 @@ public class Session: NSObject {
     
     public let webView: WKWebView
     public var pathConfiguration: PathConfiguration?
+    public var coldBootHeaders: [String: String]?
     
     private lazy var bridge = WebViewBridge(webView: webView)
     private var initialized = false
@@ -47,7 +48,7 @@ public class Session: NSObject {
     }
 
     public func visit(_ visitable: Visitable, action: VisitAction) {
-        visit(visitable, options: VisitOptions(action: action, response: nil))
+        visit(visitable, options: VisitOptions(action: action, response: nil, headers: self.coldBootHeaders))
     }
     
     public func visit(_ visitable: Visitable, options: VisitOptions? = nil, reload: Bool = false) {
@@ -61,7 +62,7 @@ public class Session: NSObject {
             initialized = false
         }
         
-        let visit = makeVisit(for: visitable, options: options ?? VisitOptions())
+        let visit = makeVisit(for: visitable, options: options ?? VisitOptions(headers: self.coldBootHeaders))
         currentVisit?.cancel()
         currentVisit = visit
         

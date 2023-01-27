@@ -15,7 +15,7 @@ final class ColdBootVisit: Visit {
         if let response = options.response, response.isSuccessful, let body = response.responseHTML {
             navigation = webView.loadHTMLString(body, baseURL: location)
         } else {
-            navigation = webView.load(URLRequest(url: location))
+            navigation = webView.load(request(for: location))
         }
 
         delegate?.visitDidStart(self)
@@ -51,6 +51,14 @@ final class ColdBootVisit: Visit {
     
     private func log(_ name: String) {
         debugLog("[ColdBootVisit] \(name) \(location.absoluteString)")
+    }
+
+    private func request(for url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        self.options.headers?.forEach{ field, value in
+            request.setValue(value, forHTTPHeaderField: field)
+        }
+        return request
     }
 }
 
