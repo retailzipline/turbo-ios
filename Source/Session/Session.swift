@@ -11,6 +11,11 @@ public class Session: NSObject {
     public let webView: WKWebView
     public var pathConfiguration: PathConfiguration?
     public var coldBootHeaders: [String: String]?
+
+    private var shouldColdBootVisit: Bool {
+        guard let coldBootHeaders else { return false }
+        return !coldBootHeaders.isEmpty
+    }
     
     private lazy var bridge = WebViewBridge(webView: webView)
     private var initialized = false
@@ -73,7 +78,7 @@ public class Session: NSObject {
     }
     
     private func makeVisit(for visitable: Visitable, options: VisitOptions) -> Visit {
-        if initialized {
+        if initialized && !shouldColdBootVisit {
             return JavaScriptVisit(visitable: visitable, options: options, bridge: bridge, restorationIdentifier: restorationIdentifier(for: visitable))
         } else {
             return ColdBootVisit(visitable: visitable, options: options, bridge: bridge)
