@@ -56,6 +56,14 @@ class SessionSpec: QuickSpec {
                 
                 expect(sessionDelegate.sessionDidStartRequestCalled).toEventually(beTrue(), timeout: timeout)
             }
+
+            it("visits with headers") {
+                let visitable = TestVisitable(url: self.url("/"))
+                session.coldBootHeaders = ["field": "value"]
+                session.visit(visitable)
+
+                expect(sessionDelegate.sessionDidStartRequestCalled).toEventually(beTrue(), timeout: timeout)
+            }
             
             context("when visit succeeds") {
                 beforeEach {

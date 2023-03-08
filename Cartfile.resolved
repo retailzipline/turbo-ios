@@ -1,4 +1,4 @@
 github "AliSoftware/OHHTTPStubs" "9.1.0"
-github "quick/nimble" "v10.0.0"
-github "quick/quick" "v5.0.1"
+github "quick/nimble" "v11.2.1"
+github "quick/quick" "v6.1.0"
 github "swisspol/GCDWebServer" "3.5.4"
