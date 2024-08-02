@@ -265,9 +265,6 @@ extension Session: VisitableDelegate {
         } else if visitable !== topmostVisit.visitable {
             // Navigating backward from a web view screen to a web view screen.
             visit(visitable, action: .restore)
-        } else if visitable === previousVisit?.visitable {
-            // Navigating backward from a native to a web view screen.
-            visit(visitable, action: .restore)
         }
     }
 
