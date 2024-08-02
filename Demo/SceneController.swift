@@ -79,6 +79,10 @@ extension SceneController: UIWindowSceneDelegate {
 }
 
 extension SceneController: SessionDelegate {
+    func sessionShouldFailRequest(_ url: URL) -> Bool {
+        return false
+    }
+    
     func session(_ session: Session, didProposeVisit proposal: VisitProposal) {
         navigationController.route(url: proposal.url, options: proposal.options, properties: proposal.properties)
     }
