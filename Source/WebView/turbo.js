@@ -193,12 +193,12 @@
     }
   }
 
+  window.turboNative = new TurboNative()
+
   addEventListener("error", event => {
     const error = event.message + " (" + event.filename + ":" + event.lineno + ":" + event.colno + ")"
     window.turboNative.errorRaised(error)
   }, false)
-
-  window.turboNative = new TurboNative()
 
   const setup = function() {
     window.turboNative.registerAdapter()
